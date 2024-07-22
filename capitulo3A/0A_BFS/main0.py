@@ -15,14 +15,15 @@ romania = Map(
      'S': (187, 463), 'T': ( 83, 414), 'U': (471, 363), 'V': (535, 473), 'Z': (92, 539)})
 
 r1 = RouteProblem('A', 'B', map=romania)
-
+print("Lista definitiva de Estados utilizando breadth_first_bfs():")
 print( path_states(breadth_first_bfs(r1)) )
 
+print("Lista definitiva de Estados utilizando uniform_cost_search():")
 print( path_states(uniform_cost_search(r1)) )
 
+print("Lista definitiva de Estados utilizando depth_first_bfs():")
 print( path_states(depth_first_bfs(r1)) )
 
-print( path_states(astar_search(r1)) )
 
 
 
