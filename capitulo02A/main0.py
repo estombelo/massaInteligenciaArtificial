@@ -31,18 +31,18 @@ def test_inseriragentenoambiente():
     agent2 = Agent()
 
     o = v.is_done()
-    print("Sem agente is_done={}".format(o))
+    print("    Sem agente is_done={}".format(o))
 
     v.add_thing(agent, "area1")
     v.add_thing(agent2, "area1")
 
     o = v.is_done()
-    print("Com agente inserido is_done={}".format(o))
+    print("    Com agente inserido is_done={}".format(o))
 
     # v.step() # Erro: falta implementar método percept()
     # v.run() # Erro: falta implementar método percept()
     allthings = v.list_things_at("area1")
-    print(allthings)
+    print(f"Lista de coisas dentro do ambiente:{allthings}")
 
 
 test_inseriragentenoambiente()
@@ -64,19 +64,23 @@ def test_trivialvacuumenvironment():
 
     print('\n')
     print("Desempenho: {}".format(agent.performance))
-    print(v.status)
+    print(f"    status mundo:  {v.status}")
 
     v.step()
     print("Desempenho: {}".format(agent.performance))
-    print(v.status)
+    print(f"    status mundo:  {v.status}")
 
     v.step()
     print("Desempenho: {}".format(agent.performance))
-    print(v.status)
+    print(f"    status mundo:  {v.status}")
 
     v.step()
     print("Desempenho: {}".format(agent.performance))
-    print(v.status)
+    print(f"    status mundo:  {v.status}")
+
+    v.step()
+    print("Desempenho: {}".format(agent.performance))
+    print(f"    status mundo:  {v.status}")
 
     # v.run(10)
 
