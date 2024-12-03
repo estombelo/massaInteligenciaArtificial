@@ -97,3 +97,5 @@ Observar na Figura 2.16 três formas de representar estados e transições entre
 * Fatorada
 * Estruturada
 
+Iniciaremos com a representação atômica.
+
