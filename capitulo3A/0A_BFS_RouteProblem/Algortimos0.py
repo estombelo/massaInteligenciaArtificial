@@ -21,7 +21,7 @@ def path_actions(node):
     "The sequence of actions to get to this node."
     if node.parent is None:
         return []
-    return path_actions(node.parent) + [node.action]
+    return path_actions(node.parent) + ['To'+node.action]
 
 
 def path_states(node):
@@ -59,22 +59,9 @@ def best_first_search(problem, f):
 def g(n): return n.path_cost
 
 
-def astar_search(problem, h=None):
-    """Search nodes with minimum f(n) = g(n) + h(n)."""
-    h = h or problem.h
-    return best_first_search(problem, f=lambda n: g(n) + h(n))
-
-
-def weighted_astar_search(problem, h=None, weight=1.4):
-    """Search nodes with minimum f(n) = g(n) + weight * h(n)."""
-    h = h or problem.h
-    return best_first_search(problem, f=lambda n: g(n) + weight * h(n))
-
-
-def greedy_bfs(problem, h=None):
-    """Search nodes with minimum h(n)."""
-    h = h or problem.h
-    return best_first_search(problem, f=h)
+def breadth_first_bfs(problem):
+    "Search shallowest nodes in the search tree first; using best-first."
+    return best_first_search(problem, f=len)
 
 
 def uniform_cost_search(problem):
@@ -82,14 +69,34 @@ def uniform_cost_search(problem):
     return best_first_search(problem, f=g)
 
 
-def breadth_first_bfs(problem):
-    "Search shallowest nodes in the search tree first; using best-first."
-    return best_first_search(problem, f=len)
-
-
 def depth_first_bfs(problem):
     "Search deepest nodes in the search tree first; using best-first."
     return best_first_search(problem, f=lambda n: -len(n))
+
+
+def depth_limited_search(problem, limit=10):
+    "Search deepest nodes in the search tree first."
+    frontier = LIFOQueue([Node(problem.initial)])
+    result = failure
+    while frontier:
+        node = frontier.pop()
+        if problem.is_goal(node.state):
+            return node
+        elif len(node) >= limit:
+            result = cutoff
+        elif not is_cycle(node):
+            for child in expand(problem, node):
+                frontier.append(child)
+    return result
+
+def iterative_deepening_search(problem):
+    "Do depth-limited search with increasing depth limits."
+    for limit in range(1, sys.maxsize):
+        result = depth_limited_search(problem, limit)
+        if result != cutoff:
+            return result
+
+##########################################################
 
 def is_cycle(node, k=30):
     "Does this node form a cycle of length k or less?"
@@ -119,30 +126,6 @@ def breadth_first_search(problem):
     return failure
 
 
-def iterative_deepening_search(problem):
-    "Do depth-limited search with increasing depth limits."
-    for limit in range(1, sys.maxsize):
-        result = depth_limited_search(problem, limit)
-        if result != cutoff:
-            return result
-
-
-def depth_limited_search(problem, limit=10):
-    "Search deepest nodes in the search tree first."
-    frontier = LIFOQueue([Node(problem.initial)])
-    result = failure
-    while frontier:
-        node = frontier.pop()
-        if problem.is_goal(node.state):
-            return node
-        elif len(node) >= limit:
-            result = cutoff
-        elif not is_cycle(node):
-            for child in expand(problem, node):
-                frontier.append(child)
-    return result
-
-
 def depth_first_recursive_search(problem, node=None):
     if node is None:
         node = Node(problem.initial)
@@ -156,5 +139,22 @@ def depth_first_recursive_search(problem, node=None):
             if result:
                 return result
         return failure
+
+
+def astar_search(problem, h=None):
+    """Search nodes with minimum f(n) = g(n) + h(n)."""
+    h = h or problem.h
+    return best_first_search(problem, f=lambda n: g(n) + h(n))
+
+
+def greedy_bfs(problem, h=None):
+    """Search nodes with minimum h(n)."""
+    h = h or problem.h
+    return best_first_search(problem, f=h)
+
+def weighted_astar_search(problem, h=None, weight=1.4):
+    """Search nodes with minimum f(n) = g(n) + weight * h(n)."""
+    h = h or problem.h
+    return best_first_search(problem, f=lambda n: g(n) + weight * h(n))
 
 

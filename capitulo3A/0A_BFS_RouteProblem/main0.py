@@ -1,5 +1,4 @@
 from Algortimos0 import *
-# import Algortimos0
 from Map0 import Map
 from RoutProblem0 import RouteProblem
 
@@ -15,15 +14,39 @@ romania = Map(
      'S': (187, 463), 'T': ( 83, 414), 'U': (471, 363), 'V': (535, 473), 'Z': (92, 539)})
 
 r1 = RouteProblem('A', 'B', map=romania)
-print("Lista definitiva de Estados utilizando breadth_first_bfs():")
-print( path_states(breadth_first_bfs(r1)) )
+print('*' * 30)
+print("Lista definitiva de Estados e ações utilizando breadth_first_bfs():")
+print( r1 )
+solution_node = breadth_first_bfs(r1)
+print( path_states( solution_node ) )
+print( path_actions( solution_node ) )
 
+print('*' * 30)
 print("Lista definitiva de Estados utilizando uniform_cost_search():")
-print( path_states(uniform_cost_search(r1)) )
+print( r1 )
+solution_node = uniform_cost_search(r1)
+print( path_states( solution_node ) )
+print( path_actions( solution_node ) )
 
+print('*' * 30)
 print("Lista definitiva de Estados utilizando depth_first_bfs():")
-print( path_states(depth_first_bfs(r1)) )
+print( r1 )
+solution_node = depth_first_bfs(r1)
+print( path_states( solution_node ) )
+print( path_actions( solution_node ) )
 
+print('*' * 30)
+print("Lista definitiva de Estados utilizando depth_limited_search():")
+print( r1 )
+solution_node = depth_limited_search(r1)
+print( path_states( solution_node ) )
+print( path_actions( solution_node ) )
 
+print('*' * 30)
+print("Lista definitiva de Estados utilizando iterative_deepening_search():")
+print( r1 )
+solution_node = iterative_deepening_search(r1)
+print( path_states( solution_node ) )
+print( path_actions( solution_node ) )
 
 
